@@ -41,16 +41,61 @@ const App = () => {
             end: () => `+=${window.innerHeight}`,
             scrub: 0.5,
             id: `spread-${index}`,
-          }
-        })
+          },
+        });
       });
 
       // flip the card and reset rotation with stagger
 
-      
+      cards.forEach((card, index) => {
+        const frontCard = card.querySelector(".flip-card-front");
+        const backCard = card.querySelector(".flip-card-back");
+
+        const staggerOffset = index * 0.05;
+        const startOffset = 1 / 3 + staggerOffset;
+        const endOffset = 2 / 3 + staggerOffset;
+
+        ScrollTrigger.create({
+          trigger: containerRef.current.querySelector(".cards"),
+          start: "top top",
+          end: () => `+=${totalScrollHeight}`,
+          scrub: 1,
+          id: `rotate-flip-${index}`,
+          onUpdate: (update) => {
+            const progress = update.progress;
+            if (progress >= startOffset && progress <= endOffset) {
+              const animationProgress = (progress - startOffset) / (1 / 3);
+              const frontRotation = -180 * animationProgress;
+              const backRotation = 180 - 180 * animationProgress;
+              const cardRotation = rotations[index] * (1 - animationProgress);
+
+              gsap.to(frontCard, {
+                rotateY: frontRotation,
+                ease: "power1.Out",
+              });
+              gsap.to(backCard, {
+                rotateY: backRotation,
+                ease: "power1.Out",
+              });
+              gsap.to(card, {
+                xPercent: -50,
+                yPercent: -50,
+                rotate: cardRotation,
+                ease: "power1.out"
+              });
+            }
+          },
+        });
+      });
     },
     { scope: containerRef }
   );
+
+  useEffect(() => {
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    }
+  }, []) 
 
   return (
     <ReactLenis root>
