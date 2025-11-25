@@ -4,7 +4,10 @@ import gsap from "gsap";
 import { useRef, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import ReactLenis from "@studio-freight/lenis";
+import { frontendCategories } from "./data";
+import { Github, GlobeLock, Linkedin, Twitter } from "lucide-react";
+
+// import ReactLenis from "@studio-freight/lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,30 +101,57 @@ const App = () => {
   }, []) 
 
   return (
-    <ReactLenis root>
+ 
       <div className="container" ref={containerRef}>
         <section id="hero">
-          <h1 className="">
-            All you need to know about <br /> ScrollTrigger and flip in GSAP
-          </h1>
+         <div className="">
+          <p className=""></p>
+              <h1 className="text-[#242736] text-[40px] md:text-[45px] xl:text-[60px] font-600 font-bold tracking-wider font-['Space_Grotesk']">
+                <p className=" text-[#ec5c29] text-[24px] animate-bounce">
+                Oyedele Sulaiman
+              </p>
+                <span className="block ml-40 md:ml-0 xl:ml-40]">Frontend Developer</span>
+                <span className="block">& Mobile Developer</span>
+              </h1>
+              
+            </div>
         </section>
-        <section className="cards">
+        <section className="cards" id="cards">
           {[...Array(4)].map((_, index) => (
             <Card
               key={index}
               id={`card-${index + 1}`}
-              frontSrc="/vite.svg"
+              frontSrc="/cardImg.png"
               frontAlt="Card Image"
-              backText="Your card details appear here"
+               category={frontendCategories[index]} 
               ref={(el) => (cardRefs.current[index] = el)}
             />
           ))}
         </section>
         <section id="footer">
-          <h1 className="">Visit GSAP library lorem and learn more!!!</h1>
+          <h1 className="">
+            Visit
+            <p className="text-[24px]"> My Portfolio & Social Media for more of this content</p> 
+            <div className="flex items-center gap-5 justify-center ">
+              <a target="_blank" href="https://x.com/sulyman002"  className=" transition-all duration-300 hover:scale-1.4 hover:text-[#ec5c29]">
+                <Twitter size={28} />
+              </a>
+              <a target="_blank" href="https://www.linkedin.com/in/oyedele-sulaiman-a9a677210/" className=" transition-all duration-300 hover:scale-1.4 hover:text-[#ec5c29]">
+                <Linkedin size={28} />
+              </a>
+              <a target="_blank" href="https://github.com/sulyman002" className=" transition-all duration-300 hover:scale-1.4 hover:text-[#ec5c29]">
+                <Github size={28} />
+              </a>
+              <a target="_blank" href="http://sulaimanoyedele.vercel.app/" className=" transition-all duration-300 hover:scale-1.4 hover:text-[#ec5c29]">
+                <GlobeLock size={28} />
+              </a>
+            </div>
+          </h1>
+          
+
         </section>
       </div>
-    </ReactLenis>
+  
   );
 };
 
